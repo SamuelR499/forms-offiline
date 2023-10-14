@@ -12,15 +12,13 @@ const ViewUser = () => {
   let [userData, setUserData] = useState({});
 
   let searchUser = () => {
-    console.log(inputUserId);
     setUserData({});
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM mytable_user where user_id = ?',
+        'SELECT * FROM data_user where user_id = ?',
         [inputUserId],
         (tx, results) => {
           var len = results.rows.length;
-          console.log('len', len);
           if (len > 0) {
             setUserData(results.rows.item(0));
           } else {

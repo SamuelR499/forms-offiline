@@ -9,14 +9,13 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     db.transaction(function (txn) {
       txn.executeSql(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='mytable_user'",
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='data_user'",
         [],
         function (tx, res) {
-          console.log('item:', res.rows.length);
           if (res.rows.length == 0) {
-            txn.executeSql('DROP TABLE IF EXISTS mytable_user', []);
+            txn.executeSql('DROP TABLE IF EXISTS data_user', []);
             txn.executeSql(
-              'CREATE TABLE IF NOT EXISTS mytable_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name VARCHAR(20), user_contact INT(10), user_address VARCHAR(255), user_social VARCHAR(255))',
+              'CREATE TABLE IF NOT EXISTS data_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name VARCHAR(20), user_contact INT(10), user_address VARCHAR(255), user_social VARCHAR(255), user_cnpj VARCHAR(20))',
               []
             );
           }

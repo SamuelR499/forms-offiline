@@ -12,10 +12,9 @@ const DeleteUser = ({ navigation }) => {
   let deleteUser = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        'DELETE FROM mytable_user where user_id=?',
+        'DELETE FROM data_user where user_id=?',
         [inputUserId],
         (tx, results) => {
-          console.log('Results', results.rowsAffected);
           if (results.rowsAffected > 0) {
             Alert.alert(
               'Sucesso',

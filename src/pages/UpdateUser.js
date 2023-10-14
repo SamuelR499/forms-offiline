@@ -31,10 +31,9 @@ const UpdateUser = ({ navigation }) => {
   };
 
   let searchUser = () => {
-    console.log(inputUserId);
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM mytable_user where user_id = ?',
+        'SELECT * FROM data_user where user_id = ?',
         [inputUserId],
         (tx, results) => {
           var len = results.rows.length;
@@ -55,7 +54,6 @@ const UpdateUser = ({ navigation }) => {
     });
   };
   let updateUser = () => {
-    console.log(inputUserId, userName, userContact, userAddress, userSocial);
 
     if (!inputUserId) {
       alert('Por Favor informe o Código!');
@@ -80,10 +78,9 @@ const UpdateUser = ({ navigation }) => {
 
     db.transaction((tx) => {
       tx.executeSql(
-        'UPDATE mytable_user set user_name=?, user_contact=? , user_address=?, user_social=? where user_id=?',
+        'UPDATE data_user set user_name=?, user_contact=? , user_address=?, user_social=? where user_id=?',
         [userName, userContact, userAddress, userSocial, inputUserId],
         (tx, results) => {
-          console.log('Results', results.rowsAffected);
           if (results.rowsAffected > 0) {
             Alert.alert(
               'Sucesso',

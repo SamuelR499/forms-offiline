@@ -11,7 +11,7 @@ const ViewAllUser = () => {
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM mytable_user',
+        'SELECT * FROM data_user',
         [],
         (tx, results) => {
           var temp = [];
@@ -30,7 +30,6 @@ const ViewAllUser = () => {
       )
       .join('\n');
       openURL(`mailto:samuel.ribeiro@fitoway.com.br?subject=SendMail&body=${csvData}`);
-      console.log(csvData);
      alert('teste');
   };
 
