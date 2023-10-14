@@ -5,28 +5,74 @@ import {
   KeyboardAvoidingView,
   Alert,
   SafeAreaView,
-  Image
+  Image,
 } from 'react-native';
 import Mytextinput from './components/Mytextinput';
 import Mybutton from './components/Mybutton';
-import { DatabaseConnection } from '../database/database-connection';
+import MyRadioButton from './components/MyRadioButton';
 
+import { DatabaseConnection } from '../database/database-connection';
 
 const db = DatabaseConnection.getConnection();
 
 const RegisterUser = ({ navigation }) => {
+  const radiusOptions = ['Pessoa Física', 'Pessoa Jurídica', 'Nutricionista'];
+
   const [userName, setUserName] = useState('');
   const [userContact, setUserContact] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const [userSocial, setUserSocial] = useState('');
+  const [userCnpj, setUserCnpj] = useState('');
+  const [selectedRadius, setSelectedRadius] = useState(radiusOptions[0]); // Valor inicial selecionado
+
+  const handleCnpjChange = (text) => {
+    const cnpj = text.replace(/\D/g, '');
+
+    if (cnpj.length <= 14) {
+      // Formata o CNPJ com pontos, barra e traço conforme o usuário digita
+      let formatted = '';
+      for (let i = 0; i < cnpj.length; i++) {
+        if (i === 2 || i === 5) {
+          formatted += `.${cnpj[i]}`;
+        } else if (i === 8) {
+          formatted += `/${cnpj[i]}`;
+        } else if (i === 12) {
+          formatted += `-${cnpj[i]}`;
+        } else {
+          formatted += cnpj[i];
+        }
+      }
+      setUserCnpj(formatted);
+    } else {
+      setUserCnpj(text); // Se não tiver 14 dígitos, apenas atualize o campo com o valor não formatado
+    }
+  };
+
+  const handlePhoneChange = (text) => {
+    const phone = text.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
+    let formatted = '';
+    for (let i = 0; i < phone.length; i++) {
+      if (i === 0) {
+        formatted += `(${phone[i]}`;
+      } else if (i === 2) {
+        formatted += `) ${phone[i]}`;
+      } else if (i === 7) {
+        formatted += `-${phone[i]}`;
+      } else {
+        formatted += phone[i];
+      }
+    }
+
+    setUserContact(formatted);
+  };
 
   const submitData = () => {
     db.transaction(function (tx) {
       tx.executeSql(
-        'INSERT INTO mytable_user (user_name, user_contact, user_address, user_social) VALUES (?,?,?,?)',
-        [userName, userContact, userAddress, userSocial],
+        'INSERT INTO data_user (user_name, user_contact, user_address, user_social, user_cnpj) VALUES (?,?,?,?,?)',
+        [userName, userContact, userAddress, userSocial, userCnpj],
         (tx, results) => {
-          console.log('Results', results.rowsAffected);
           if (results.rowsAffected > 0) {
             Alert.alert(
               'Sucesso',
@@ -39,6 +85,8 @@ const RegisterUser = ({ navigation }) => {
                     setUserContact('')
                     setUserAddress('')
                     setUserSocial('')
+                    setUserCnpj('')
+                    setSelectedRadius(radiusOptions[0]); // Resetar para a opção padrão
                     navigation.navigate('Register')
                   },
                 },
@@ -49,11 +97,11 @@ const RegisterUser = ({ navigation }) => {
         }
       );
     });
-    
   };
 
   const register_user = () => {
-    console.log(userName, userContact, userAddress);
+    console.log(userName, userContact, userAddress, userSocial, userCnpj);
+    console.log(':::::::::::RADIUS::::: --> ', selectedRadius);
 
     if (!userName) {
       alert('Por favor preencha o nome !');
@@ -86,12 +134,12 @@ const RegisterUser = ({ navigation }) => {
                     setUserContact('')
                     setUserAddress('')
                     setUserSocial('')
+                    setUserCnpj('')
+                    setSelectedRadius(radiusOptions[0]); // Resetar para a opção padrão
                   },
                 },
                 {
                   text: 'Não',
-                  onPress: () => console.log('Não saiu'),
-
                 },
               ],
               { cancelable: false }
@@ -110,50 +158,59 @@ const RegisterUser = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <Image
-        source={require('../../assets/images/ftw_logo.webp')}
-        style={{ marginTop: 30, margin: 10, alignSelf: 'center' }}
-      />
+        <Image
+          source={require('../../assets/images/ftw_logo.webp')}
+          style={{ marginVertical: 30, margin: 10, alignSelf: 'center' }}
+        />
         <View style={{ flex: 1 }}>
           <ScrollView keyboardShouldPersistTaps="handled">
             <KeyboardAvoidingView
               behavior="padding"
               style={{ flex: 1, justifyContent: 'space-between' }}>
+              {radiusOptions.map((option, index) => (
+                <View key={index}>
+                  <MyRadioButton
+                    label={option}
+                    checked={selectedRadius === option}
+                    onPress={() => setSelectedRadius(option)}
+                  />
+                </View>
+              ))}
               <Mytextinput
                 placeholder="Nome"
-                onChangeText={
-                  (userName) => setUserName(userName)
-                }
+                onChangeText={(userName) => setUserName(userName)}
                 style={{ padding: 10 }}
                 value={userName}
               />
               <Mytextinput
                 placeholder="Telefone"
-                onChangeText={
-                  (userContact) => setUserContact(userContact)
-                }
-                maxLength={10}
+                onChangeText={handlePhoneChange}
+                maxLength={14} // Defina o máximo para o valor formatado
                 keyboardType="numeric"
                 style={{ padding: 10 }}
                 value={userContact}
               />
               <Mytextinput
                 placeholder="E-mail"
-                onChangeText={
-                  (userAddress) => setUserAddress(userAddress)
-                }
+                onChangeText={(userAddress) => setUserAddress(userAddress)}
                 maxLength={225}
                 style={{ padding: 10 }}
                 value={userAddress}
               />
               <Mytextinput
                 placeholder="Instagram (Opcional)"
-                onChangeText={
-                  (userSocial) => setUserSocial(userSocial)
-                }
+                onChangeText={(userSocial) => setUserSocial(userSocial)}
                 maxLength={225}
                 style={{ padding: 10 }}
                 value={userSocial}
+              />
+              <Mytextinput
+                placeholder="CNPJ"
+                onChangeText={handleCnpjChange}
+                maxLength={18} // Defina o máximo para o valor formatado
+                keyboardType="numeric"
+                style={{ padding: 10 }}
+                value={userCnpj}
               />
               <Mybutton title="Salvar" customClick={register_user} />
             </KeyboardAvoidingView>
