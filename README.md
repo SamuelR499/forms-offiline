@@ -10,12 +10,12 @@
 
 <!-- ************************************* Baadges ********************************************* -->
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/brunoemferreira/CRUDReactNativeSQLite?color=%2304D361">
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/brunoemferreira/CRUDReactNativeSQLite">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/brunoemferreira/CRUDReactNativeSQLite">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/SamuelR499/forms-offiline?color=%2304D361">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/SamuelR499/forms-offiline">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/SamuelR499/forms-offiline">
 </p>
 
-<p align="center" > Finalizado 31/01/2021 </p> 
+<p align="center" > Finalizado 14/10/2023 </p> 
 
 ## 🚀 Sobre o Projeto
 </br>
@@ -70,11 +70,14 @@ Esse Projeto consiste em um App de Registro de Usuários, com as funcionalidades
     - Ter o Expo Instalado no Celular
 
 ```bash
-# Clone este repositório
-$ git clone https://github.com/brunoemferreira/CRUDReactNativeSQLite.git
+# Clone este repositório com ssh
+$ git clone git@github.com:SamuelR499/forms-offiline.git
+
+# ou com https
+$ git clone https://github.com/SamuelR499/forms-offiline.git
 
 # Acesse a pasta do Projeto
-$ cd CRUDReactNativeSQLite
+$ cd forms-offiline
 
 # Baixar as dependências
 $ yarn install
@@ -91,4 +94,4 @@ $ npm start
 ```
 
 ---
-⌨️ com ❤️ por [Bruno Eduardo](https://gist.github.com/brunoemferreira) 😊
+⌨️ com ❤️ por [Samuel Ribeiro](https://github.com/SamuelR499) 😊
