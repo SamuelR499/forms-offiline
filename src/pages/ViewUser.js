@@ -53,7 +53,8 @@ const ViewUser = () => {
             <Text>Telefone : {userData.user_contact}</Text>
             <Text>E-mail : {userData.user_address}</Text>
             <Text>Instagram : {userData.user_social}</Text>
-
+            <Text>CNPJ : {userData.user_cnpj}</Text>
+            <Text>Tipo : {userData.user_type}</Text>
           </View>
         </View>
       </View>
