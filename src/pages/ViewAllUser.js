@@ -26,7 +26,7 @@ const ViewAllUser = () => {
   const handleClick = async () => {
     const csvData = flatListItems
       .map((item) =>
-      `${item.user_id},${item.user_name},${item.user_contact},${item.user_address}`
+      `${item.user_id},${item.user_name},${item.user_contact},${item.user_address},${item.user_social},${item.user_cnpj || 'Não tem CNPJ'},${item.user_type}`
       )
       .join('\n');
       openURL(`mailto:samuel.ribeiro@fitoway.com.br?subject=SendMail&body=${csvData}`);
@@ -53,6 +53,11 @@ const ViewAllUser = () => {
         <Text style={styles.textheader}>Instagram</Text>
         <Text style={styles.textbottom}>{item.user_social}</Text>
 
+        <Text style={styles.textheader}>CNPJ</Text>
+        <Text style={styles.textbottom}>{item.user_cnpj || 'Não tem CNPJ'}</Text>
+
+        <Text style={styles.textheader}>Tipo</Text>
+        <Text style={styles.textbottom}>{item.user_type}</Text>
       </View>
     );
   };
