@@ -11,24 +11,28 @@ import Mytext from './components/Mytext';
 import Mytextinput from './components/Mytextinput';
 import Mybutton from './components/Mybutton';
 import { DatabaseConnection } from '../database/database-connection';
+import MyRadioButton from './components/MyRadioButton';
 
 const db = DatabaseConnection.getConnection();
 
 const UpdateUser = ({ navigation }) => {
+  const radiusOptions = ['Pessoa Física', 'Pessoa Jurídica', 'Nutricionista'];
   const [inputUserId, setInputUserId] = useState('');
   const [userName, setUserName] = useState('');
   const [userContact, setUserContact] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const [userSocial, setUserSocial] = useState('');
   const [userCnpj, setUserCnpj] = useState('');
+  const [selectedRadius, setSelectedRadius] = useState(radiusOptions[0]);
 
 
-  let updateAllStates = (name, contact, address, social, cnpj) => {
+  let updateAllStates = (name, contact, address, social, cnpj, userType) => {
     setUserName(name);
     setUserContact(contact);
     setUserAddress(address);
     setUserSocial(social);
     setUserCnpj(cnpj);
+    setSelectedRadius(userType)
 
   };
 
@@ -46,11 +50,12 @@ const UpdateUser = ({ navigation }) => {
               res.user_contact,
               res.user_address,
               res.user_social,
-              res.user_cnpj
+              res.user_cnpj,
+              res.user_type
             );
           } else {
             alert('Usuário não encontrado!');
-            updateAllStates('', '', '', '', '');
+            updateAllStates('', '', '', '', '', '');
           }
         }
       );
@@ -78,8 +83,8 @@ const UpdateUser = ({ navigation }) => {
 
     db.transaction((tx) => {
       tx.executeSql(
-        'UPDATE data1_user set user_name=?, user_contact=? , user_address=?, user_social=? where user_id=?',
-        [userName, userContact, userAddress, userSocial, userCnpj, inputUserId],
+        'UPDATE data1_user set user_name=?, user_contact=?, user_address=?, user_social=?, user_cnpj=?, user_type=? where user_id=?',
+        [userName, userContact, userAddress, userSocial, userCnpj, selectedRadius, inputUserId],
         (tx, results) => {
           if (results.rowsAffected > 0) {
             Alert.alert(
@@ -119,8 +124,17 @@ const UpdateUser = ({ navigation }) => {
                 title="Buscar Usuário"
                 customClick={searchUser}
               />
+              {radiusOptions.map((option, index) => (
+                <View key={index}>
+                  <MyRadioButton
+                    label={option}
+                    checked={selectedRadius === option}
+                    onPress={() => setSelectedRadius(option)}
+                  />
+                </View>
+              ))}
               <Mytextinput
-                placeholder="Entre com o Nome"
+                placeholder="Nome"
                 value={userName}
                 style={{ padding: 10 }}
                 onChangeText={
@@ -159,7 +173,7 @@ const UpdateUser = ({ navigation }) => {
                 placeholder="CNPJ (Opcional)"
                 value={userCnpj || ''}
                 onChangeText={
-                  (userContact) => setUserContact(userContact)
+                  (userCnpj) => setUserCnpj(userCnpj)
                 }
                 maxLength={10}
                 style={{ padding: 10 }}
