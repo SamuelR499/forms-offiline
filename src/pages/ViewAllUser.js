@@ -11,7 +11,7 @@ const ViewAllUser = () => {
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM data_user',
+        'SELECT * FROM data1_user',
         [],
         (tx, results) => {
           var temp = [];

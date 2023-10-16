@@ -70,8 +70,8 @@ const RegisterUser = ({ navigation }) => {
   const submitData = () => {
     db.transaction(function (tx) {
       tx.executeSql(
-        'INSERT INTO data_user (user_name, user_contact, user_address, user_social, user_cnpj) VALUES (?,?,?,?,?)',
-        [userName, userContact, userAddress, userSocial, userCnpj],
+        'INSERT INTO data1_user (user_name, user_contact, user_address, user_social, user_cnpj, user_type) VALUES (?,?,?,?,?,?)',
+        [userName, userContact, userAddress, userSocial, userCnpj, selectedRadius],
         (tx, results) => {
           if (results.rowsAffected > 0) {
             Alert.alert(
@@ -86,7 +86,7 @@ const RegisterUser = ({ navigation }) => {
                     setUserAddress('')
                     setUserSocial('')
                     setUserCnpj('')
-                    setSelectedRadius(radiusOptions[0]); // Resetar para a opção padrão
+                    setSelectedRadius(radiusOptions[0]);
                     navigation.navigate('Register')
                   },
                 },
@@ -100,9 +100,6 @@ const RegisterUser = ({ navigation }) => {
   };
 
   const register_user = () => {
-    console.log(userName, userContact, userAddress, userSocial, userCnpj);
-    console.log(':::::::::::RADIUS::::: --> ', selectedRadius);
-
     if (!userName) {
       alert('Por favor preencha o nome !');
       return;

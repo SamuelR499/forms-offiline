@@ -35,7 +35,7 @@ const UpdateUser = ({ navigation }) => {
   let searchUser = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM data_user where user_id = ?',
+        'SELECT * FROM data1_user where user_id = ?',
         [inputUserId],
         (tx, results) => {
           var len = results.rows.length;
@@ -78,7 +78,7 @@ const UpdateUser = ({ navigation }) => {
 
     db.transaction((tx) => {
       tx.executeSql(
-        'UPDATE data_user set user_name=?, user_contact=? , user_address=?, user_social=? where user_id=?',
+        'UPDATE data1_user set user_name=?, user_contact=? , user_address=?, user_social=? where user_id=?',
         [userName, userContact, userAddress, userSocial, userCnpj, inputUserId],
         (tx, results) => {
           if (results.rowsAffected > 0) {
