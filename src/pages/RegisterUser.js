@@ -23,7 +23,7 @@ const RegisterUser = ({ navigation }) => {
   const [userAddress, setUserAddress] = useState('');
   const [userSocial, setUserSocial] = useState('');
   const [userCnpj, setUserCnpj] = useState('');
-  const [selectedRadius, setSelectedRadius] = useState(radiusOptions[0]); // Valor inicial selecionado
+  const [selectedRadius, setSelectedRadius] = useState(radiusOptions[0]);
 
   const handleCnpjChange = (text) => {
     const cnpj = text.replace(/\D/g, '');
