@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   Alert,
   SafeAreaView,
-  Text,
 } from 'react-native';
 
 import Mytext from './components/Mytext';
@@ -16,18 +15,21 @@ import { DatabaseConnection } from '../database/database-connection';
 const db = DatabaseConnection.getConnection();
 
 const UpdateUser = ({ navigation }) => {
-  let [inputUserId, setInputUserId] = useState('');
-  let [userName, setUserName] = useState('');
-  let [userContact, setUserContact] = useState('');
-  let [userAddress, setUserAddress] = useState('');
-  let [userSocial, setUserSocial] = useState('');
+  const [inputUserId, setInputUserId] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userContact, setUserContact] = useState('');
+  const [userAddress, setUserAddress] = useState('');
+  const [userSocial, setUserSocial] = useState('');
+  const [userCnpj, setUserCnpj] = useState('');
 
 
-  let updateAllStates = (name, contact, address, social) => {
+  let updateAllStates = (name, contact, address, social, cnpj) => {
     setUserName(name);
     setUserContact(contact);
     setUserAddress(address);
     setUserSocial(social);
+    setUserCnpj(cnpj);
+
   };
 
   let searchUser = () => {
@@ -43,11 +45,12 @@ const UpdateUser = ({ navigation }) => {
               res.user_name,
               res.user_contact,
               res.user_address,
-              res.user_social
+              res.user_social,
+              res.user_cnpj
             );
           } else {
             alert('Usuário não encontrado!');
-            updateAllStates('', '', '', '');
+            updateAllStates('', '', '', '', '');
           }
         }
       );
@@ -71,15 +74,12 @@ const UpdateUser = ({ navigation }) => {
       alert('Por Favor informe o E-mail !');
       return;
     }
-    if (!userSocial) {
-      alert('Por Favor informe o Instagram !');
-      return;
-    }
+
 
     db.transaction((tx) => {
       tx.executeSql(
         'UPDATE data_user set user_name=?, user_contact=? , user_address=?, user_social=? where user_id=?',
-        [userName, userContact, userAddress, userSocial, inputUserId],
+        [userName, userContact, userAddress, userSocial, userCnpj, inputUserId],
         (tx, results) => {
           if (results.rowsAffected > 0) {
             Alert.alert(
@@ -128,7 +128,7 @@ const UpdateUser = ({ navigation }) => {
                 }
               />
               <Mytextinput
-                placeholder="Entre com o Telefone"
+                placeholder="Telefone"
                 value={'' + userContact}
                 onChangeText={
                   (userContact) => setUserContact(userContact)
@@ -139,7 +139,7 @@ const UpdateUser = ({ navigation }) => {
               />
               <Mytextinput
                 value={userAddress}
-                placeholder="Entre com o E-mail"
+                placeholder="E-mail"
                 onChangeText={
                   (userAddress) => setUserAddress(userAddress)
                 }
@@ -148,12 +148,22 @@ const UpdateUser = ({ navigation }) => {
               />
               <Mytextinput
                 value={userSocial}
-                placeholder="Entre com o Instagram"
+                placeholder="Instagram (Opcional)"
                 onChangeText={
                   (userSocial) => setUserSocial(userSocial)
                 }
                 maxLength={225}
                 style={{ padding: 10 }}
+              />
+              <Mytextinput
+                placeholder="CNPJ (Opcional)"
+                value={userCnpj || ''}
+                onChangeText={
+                  (userContact) => setUserContact(userContact)
+                }
+                maxLength={10}
+                style={{ padding: 10 }}
+                keyboardType="numeric"
               />
               <Mybutton
                 title="Atualizar Usuário"
