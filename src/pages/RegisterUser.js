@@ -135,7 +135,7 @@ const RegisterUser = ({ navigation }) => {
                     setUserAddress('')
                     setUserSocial('')
                     setUserCnpj('')
-                    setSelectedRadius(radiusOptions[0]); // Resetar para a opção padrão
+                    setSelectedRadius(radiusOptions[0]);
                   },
                 },
                 {
@@ -185,7 +185,7 @@ const RegisterUser = ({ navigation }) => {
               <Mytextinput
                 placeholder="Telefone"
                 onChangeText={handlePhoneChange}
-                maxLength={14} // Defina o máximo para o valor formatado
+                maxLength={14} 
                 keyboardType="numeric"
                 style={{ padding: 10 }}
                 value={userContact}
@@ -204,14 +204,16 @@ const RegisterUser = ({ navigation }) => {
                 style={{ padding: 10 }}
                 value={userSocial}
               />
-              <Mytextinput
+              { selectedRadius === radiusOptions[1] && (
+                <Mytextinput
                 placeholder="CNPJ"
                 onChangeText={handleCnpjChange}
                 maxLength={18} // Defina o máximo para o valor formatado
                 keyboardType="numeric"
                 style={{ padding: 10 }}
                 value={userCnpj}
-              />
+                />
+              )}
               <Mybutton title="Salvar" customClick={register_user} />
             </KeyboardAvoidingView>
           </ScrollView>
