@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ftw-clientes",
-    "slug": "ftwClientes",
+    "slug": "forms-offline",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,7 +20,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.testcompany.crudreactnativesqlite",
+      "package": "com.testcompany.ftwClientes",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -32,7 +32,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "dea312e7-e0c0-45b1-8cb6-6c17669ad5e8"
+        "projectId": "46c3ef23-61d8-472a-8292-c700b32abc5e"
       }
     }
   }
