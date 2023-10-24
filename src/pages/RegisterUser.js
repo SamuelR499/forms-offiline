@@ -16,7 +16,7 @@ import { DatabaseConnection } from '../database/database-connection';
 const db = DatabaseConnection.getConnection();
 
 const RegisterUser = ({ navigation }) => {
-  const radiusOptions = ['Pessoa Física', 'Pessoa Jurídica', 'Nutricionista'];
+  const radiusOptions = ['Pessoa Física', 'Pessoa Jurídica', 'Profissional da saúde'];
 
   const [userName, setUserName] = useState('');
   const [userContact, setUserContact] = useState('');

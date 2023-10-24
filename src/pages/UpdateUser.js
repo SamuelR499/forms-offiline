@@ -16,7 +16,7 @@ import MyRadioButton from './components/MyRadioButton';
 const db = DatabaseConnection.getConnection();
 
 const UpdateUser = ({ navigation }) => {
-  const radiusOptions = ['Pessoa Física', 'Pessoa Jurídica', 'Nutricionista'];
+  const radiusOptions = ['Pessoa Física', 'Pessoa Jurídica', 'Profissional da saúde'];
   const [inputUserId, setInputUserId] = useState('');
   const [userName, setUserName] = useState('');
   const [userContact, setUserContact] = useState('');
