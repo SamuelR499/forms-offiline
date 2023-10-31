@@ -30,11 +30,11 @@ Esse Projeto consiste em um App de Registro de Usuários, com as funcionalidades
 
 <div align="center">
   <img src="./assets/images/cadastro-lightmode.jpg" alt="Home" width="300px">
-  <img src="./assets/images/cadastro-lightmode(2).jpg" alt="Home" width="300px">
   <img src="./assets//images/cadastro-darkmode.jpg" alt="Home" width="300px">
+  <img src="./assets/images/cadastro-atualizar.jpg" alt="Home" width="300px">
   <img src="./assets/images/aviso-lgpd.jpg" alt="Home" width="300px">
   <img src="./assets/images/sucesso.jpg" alt="Home" width="300px">
-  <img src="./assets/images/vizualizar-todos.jpg" alt="Home" width="300px">
+  <img src="./assets/images/visualizar-todos.jpg" alt="Home" width="300px">
 </div>
 
 </br>
